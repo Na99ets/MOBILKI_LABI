@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp3.MainPage"
+             xmlns:vm="clr-namespace:MauiApp3">
+
+    <ContentPage.BindingContext>
+        <vm:CurrencyConverterViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout
+            HorizontalOptions="Center"
+            Padding="30,0"
+            Spacing="25">
+
+            <VerticalStackLayout Spacing="30">
+                <Label Text="{Binding RateDateText}" 
+                    FontSize="Large" 
+                    HorizontalOptions="Center" 
+                    TextColor="White" 
+                    FontAttributes="Bold" />
+
+                <StackLayout Orientation="Horizontal" Spacing="10">
+                    <Label Text="Дата:" VerticalOptions="Center" TextColor="White" FontSize="Medium" />
+                    <DatePicker Date="{Binding SelectedDate, Mode=TwoWay}" 
+                                Format="d" 
+                                VerticalOptions="End"
+                                IsEnabled="{Binding IsAvailable}" />
+                </StackLayout>
+                <!-- <DatePicker HorizontalOptions="Center"
+                            MinimumDate="01/01/2000"
+                            x:Name="DateSelector"
+                            Date="{Binding SelectedDate}"
+                            IsEnabled="{Binding IsAvailable}" /> -->
+                
+                <FlexLayout MaximumWidthRequest="500">
+                    <Picker WidthRequest="300"
+                                ItemsSource="{Binding Currencies}"
+                                SelectedItem="{Binding SelectedFromCurrency}"
+                                IsEnabled="{Binding IsAvailable}" />
+                    <Entry WidthRequest="50"
+                                HorizontalTextAlignment="End"
+                                Keyboard="Numeric"
+                                Text="{Binding InputAmount}" 
+                                IsEnabled="{Binding IsAvailable}" />
+                </FlexLayout>
+
+                <FlexLayout MaximumWidthRequest="500">
+                    <Picker WidthRequest="300"
+                                ItemsSource="{Binding Currencies}" 
+                                SelectedItem="{Binding SelectedToCurrency}"
+                                IsEnabled="{Binding IsAvailable}" />
+                    <Entry WidthRequest="50"
+                                HorizontalTextAlignment="End"
+                                IsReadOnly="True"
+                                Text="{Binding ConvertedAmount}"
+                                IsEnabled="{Binding IsAvailable}" />
+                </FlexLayout>
+            </VerticalStackLayout>
+            <ActivityIndicator IsRunning="True" IsVisible="{Binding IsLoading}" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+
+</ContentPage>
